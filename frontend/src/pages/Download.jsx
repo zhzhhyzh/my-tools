@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { FiDownload, FiMonitor, FiCpu, FiCheck, FiArrowLeft } from "react-icons/fi";
 
-const GITHUB_REPO = "YOUR_GITHUB_USERNAME/pdf-tools";
+const GITHUB_REPO = "zhzhhyzh/my-tools";
 const LATEST_VERSION = "v1.0.0";
 
 const platforms = [
