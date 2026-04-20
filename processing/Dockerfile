@@ -18,5 +18,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-# Cloud Run sets PORT env var automatically
-CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-8080}"]
+# Hugging Face Spaces uses port 7860 by default
+EXPOSE 7860
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "7860"]
