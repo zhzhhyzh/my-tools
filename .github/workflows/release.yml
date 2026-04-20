@@ -24,7 +24,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
 
       - name: Build frontend
         working-directory: frontend
@@ -47,36 +47,38 @@ jobs:
 
       - name: Package Windows release
         run: |
-          mkdir -p release/pdf-tools-windows
+          PKG=release/pdf-tools-windows
+          mkdir -p $PKG/backend/uploads
+          mkdir -p $PKG/frontend
           # Copy backend
-          cp -r backend/index.js backend/package.json backend/package-lock.json backend/node_modules release/pdf-tools-windows/backend/
-          mkdir -p release/pdf-tools-windows/backend/uploads
+          cp backend/index.js backend/package.json backend/package-lock.json $PKG/backend/
+          cp -r backend/node_modules $PKG/backend/
           # Copy frontend dist
-          mkdir -p release/pdf-tools-windows/frontend
-          cp -r frontend/dist release/pdf-tools-windows/frontend/dist
-          # Copy processing
-          cp -r processing release/pdf-tools-windows/processing
+          cp -r frontend/dist $PKG/frontend/
+          # Copy processing (exclude __pycache__)
+          rsync -a --exclude='__pycache__' processing/ $PKG/processing/
           # Copy Windows scripts to root
-          cp scripts/install-windows.bat release/pdf-tools-windows/install.bat
-          cp scripts/run-windows.bat release/pdf-tools-windows/run.bat
+          cp scripts/install-windows.bat $PKG/install.bat
+          cp scripts/run-windows.bat $PKG/run.bat
           # Create zip
           cd release && zip -r ../pdf-tools-windows-${{ steps.version.outputs.tag }}.zip pdf-tools-windows/
 
       - name: Package Mac (AMD64) release
         run: |
-          mkdir -p release/pdf-tools-mac-amd64
+          PKG=release/pdf-tools-mac-amd64
+          mkdir -p $PKG/backend/uploads
+          mkdir -p $PKG/frontend
           # Copy backend
-          cp -r backend/index.js backend/package.json backend/package-lock.json backend/node_modules release/pdf-tools-mac-amd64/backend/
-          mkdir -p release/pdf-tools-mac-amd64/backend/uploads
+          cp backend/index.js backend/package.json backend/package-lock.json $PKG/backend/
+          cp -r backend/node_modules $PKG/backend/
           # Copy frontend dist
-          mkdir -p release/pdf-tools-mac-amd64/frontend
-          cp -r frontend/dist release/pdf-tools-mac-amd64/frontend/dist
-          # Copy processing
-          cp -r processing release/pdf-tools-mac-amd64/processing
+          cp -r frontend/dist $PKG/frontend/
+          # Copy processing (exclude __pycache__)
+          rsync -a --exclude='__pycache__' processing/ $PKG/processing/
           # Copy Mac scripts to root
-          cp scripts/install-mac.sh release/pdf-tools-mac-amd64/install.sh
-          cp scripts/run-mac.sh release/pdf-tools-mac-amd64/run.sh
-          chmod +x release/pdf-tools-mac-amd64/install.sh release/pdf-tools-mac-amd64/run.sh
+          cp scripts/install-mac.sh $PKG/install.sh
+          cp scripts/run-mac.sh $PKG/run.sh
+          chmod +x $PKG/install.sh $PKG/run.sh
           # Create tar.gz
           cd release && tar -czf ../pdf-tools-mac-amd64-${{ steps.version.outputs.tag }}.tar.gz pdf-tools-mac-amd64/
 
