@@ -7,12 +7,11 @@ export default function Home() {
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Hero */}
       <div className="bg-gradient-to-r from-red-500 via-red-600 to-orange-500 text-white">
-        <div className="max-w-6xl mx-auto px-4 py-16 text-center">
-          <h1 className="text-5xl font-bold mb-4">PDF Tools</h1>
-          <p className="text-xl text-white/90 max-w-2xl mx-auto">
-            Every tool you need to work with PDFs in one place. All 100% free
-            and easy to use! Merge, split, compress, convert, rotate, unlock and
-            watermark PDFs with just a few clicks.
+        <div className="max-w-6xl mx-auto px-4 py-12 text-center">
+          <h1 className="text-4xl font-bold mb-3">Every PDF Tool You Need</h1>
+          <p className="text-lg text-white/90 max-w-2xl mx-auto">
+            Merge, split, compress, convert, rotate, unlock and
+            watermark PDFs with just a few clicks. All 100% free.
           </p>
         </div>
       </div>
