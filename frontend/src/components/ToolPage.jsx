@@ -158,12 +158,12 @@ export default function ToolPage() {
 
   if (!tool) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen bg-gray-950 flex items-center justify-center">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">
+          <h2 className="text-2xl font-bold text-white mb-4">
             Tool not found
           </h2>
-          <Link to="/" className="text-blue-500 hover:underline">
+          <Link to="/" className="text-indigo-400 hover:underline">
             Go back home
           </Link>
         </div>
@@ -176,49 +176,48 @@ export default function ToolPage() {
     : files.length > 0;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="min-h-screen bg-gray-950">
       {/* Header */}
-      <div
-        className={`bg-gradient-to-r ${tool.categoryColor} text-white py-8 px-4`}
-      >
-        <div className="max-w-3xl mx-auto">
+      <div className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-indigo-600/20 via-purple-600/10 to-transparent" />
+        <div className="relative max-w-3xl mx-auto px-6 py-10">
           <Link
             to="/"
-            className="inline-flex items-center gap-2 text-white/80 hover:text-white mb-4 text-sm"
+            className="inline-flex items-center gap-2 text-gray-400 hover:text-white mb-6 text-sm transition-colors"
           >
             <FiArrowLeft /> Back to all tools
           </Link>
           <div className="flex items-center gap-4">
-            <div className="w-14 h-14 bg-white/20 rounded-xl flex items-center justify-center text-2xl">
+            <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${tool.categoryColor} text-white flex items-center justify-center text-2xl shadow-lg`}>
               {getToolIcon(tool.icon)}
             </div>
             <div>
-              <h1 className="text-3xl font-bold">{tool.name}</h1>
-              <p className="text-white/80 mt-1">{tool.desc}</p>
+              <h1 className="text-3xl font-bold text-white">{tool.name}</h1>
+              <p className="text-gray-400 mt-1">{tool.desc}</p>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="max-w-3xl mx-auto px-4 py-8">
+      <div className="max-w-3xl mx-auto px-6 py-8">
         {/* File Upload Zone */}
         {!tool.noFile && (
           <div
             {...getRootProps()}
-            className={`border-2 border-dashed rounded-2xl p-10 text-center cursor-pointer transition-all duration-200 mb-6 ${
+            className={`border-2 border-dashed rounded-2xl p-10 text-center cursor-pointer transition-all duration-300 mb-6 ${
               isDragActive
-                ? "border-blue-500 bg-blue-50"
-                : "border-gray-300 bg-white hover:border-blue-400 hover:bg-blue-50/50"
+                ? "border-indigo-500 bg-indigo-500/10"
+                : "border-white/10 bg-gray-900/50 hover:border-indigo-500/50 hover:bg-indigo-500/5"
             }`}
           >
             <input {...getInputProps()} />
-            <FiUploadCloud className="mx-auto text-4xl text-gray-400 mb-3" />
-            <p className="text-lg text-gray-600 font-medium">
+            <FiUploadCloud className="mx-auto text-4xl text-gray-500 mb-3" />
+            <p className="text-lg text-gray-300 font-medium">
               {isDragActive
                 ? "Drop files here..."
                 : `Drag & drop ${tool.multiple ? "files" : "a file"} here, or click to browse`}
             </p>
-            <p className="text-sm text-gray-400 mt-2">
+            <p className="text-sm text-gray-600 mt-2">
               Accepted: {tool.accept}
               {tool.multiple && " (multiple files)"}
             </p>
@@ -227,7 +226,7 @@ export default function ToolPage() {
 
         {/* File List */}
         {files.length > 0 && (
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 mb-6">
+          <div className="bg-gray-900/50 rounded-2xl border border-white/5 p-4 mb-6">
             <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">
               Selected Files ({files.length})
             </h3>
@@ -235,14 +234,14 @@ export default function ToolPage() {
               {files.map((file, idx) => (
                 <div
                   key={idx}
-                  className="flex items-center justify-between bg-gray-50 rounded-lg px-4 py-2"
+                  className="flex items-center justify-between bg-gray-800/50 rounded-xl px-4 py-2.5"
                 >
                   <div className="flex items-center gap-3">
-                    <FiFile className="text-gray-400" />
-                    <span className="text-sm text-gray-700 truncate max-w-xs">
+                    <FiFile className="text-gray-500" />
+                    <span className="text-sm text-gray-300 truncate max-w-xs">
                       {file.name}
                     </span>
-                    <span className="text-xs text-gray-400">
+                    <span className="text-xs text-gray-600">
                       {(file.size / 1024 / 1024).toFixed(2)} MB
                     </span>
                   </div>
@@ -251,7 +250,7 @@ export default function ToolPage() {
                       e.stopPropagation();
                       removeFile(idx);
                     }}
-                    className="text-gray-400 hover:text-red-500"
+                    className="text-gray-500 hover:text-red-400 transition-colors"
                   >
                     <FiX />
                   </button>
@@ -263,7 +262,7 @@ export default function ToolPage() {
 
         {/* Tool Options */}
         {tool.fields.length > 0 && (
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+          <div className="bg-gray-900/50 rounded-2xl border border-white/5 p-6 mb-6">
             <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-4">
               Options
             </h3>
@@ -273,10 +272,10 @@ export default function ToolPage() {
                   key={field.name}
                   className={field.textarea ? "md:col-span-2" : ""}
                 >
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-400 mb-1.5">
                     {field.label}
                     {field.required && (
-                      <span className="text-red-500 ml-1">*</span>
+                      <span className="text-red-400 ml-1">*</span>
                     )}
                   </label>
                   {field.type === "select" ? (
@@ -285,7 +284,7 @@ export default function ToolPage() {
                       onChange={(e) =>
                         handleFieldChange(field.name, e.target.value)
                       }
-                      className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                      className="w-full bg-gray-800 border border-white/10 rounded-xl px-3 py-2.5 text-sm text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
                     >
                       {field.options.map((opt) => (
                         <option key={opt} value={opt}>
@@ -301,7 +300,7 @@ export default function ToolPage() {
                       }
                       placeholder={field.placeholder}
                       rows={4}
-                      className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none font-mono"
+                      className="w-full bg-gray-800 border border-white/10 rounded-xl px-3 py-2.5 text-sm text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none font-mono placeholder-gray-600"
                     />
                   ) : (
                     <input
@@ -311,7 +310,7 @@ export default function ToolPage() {
                         handleFieldChange(field.name, e.target.value)
                       }
                       placeholder={field.placeholder}
-                      className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                      className="w-full bg-gray-800 border border-white/10 rounded-xl px-3 py-2.5 text-sm text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none placeholder-gray-600"
                     />
                   )}
                 </div>
@@ -324,10 +323,10 @@ export default function ToolPage() {
         <button
           onClick={handleProcess}
           disabled={!canProcess || processing}
-          className={`w-full py-4 rounded-xl text-white font-semibold text-lg transition-all duration-200 flex items-center justify-center gap-3 ${
+          className={`w-full py-4 rounded-2xl text-white font-semibold text-lg transition-all duration-300 flex items-center justify-center gap-3 ${
             canProcess && !processing
-              ? `bg-gradient-to-r ${tool.categoryColor} hover:shadow-lg hover:scale-[1.01] active:scale-[0.99]`
-              : "bg-gray-300 cursor-not-allowed"
+              ? "bg-gradient-to-r from-indigo-500 to-pink-500 hover:shadow-lg hover:shadow-indigo-500/25 hover:scale-[1.01] active:scale-[0.99]"
+              : "bg-gray-800 text-gray-500 cursor-not-allowed"
           }`}
         >
           {processing ? (
@@ -342,9 +341,9 @@ export default function ToolPage() {
 
         {/* Progress Bar */}
         {processing && (
-          <div className="mt-4 bg-gray-200 rounded-full h-2 overflow-hidden">
+          <div className="mt-4 bg-gray-800 rounded-full h-2 overflow-hidden">
             <div
-              className={`h-full bg-gradient-to-r ${tool.categoryColor} transition-all duration-300 rounded-full`}
+              className="h-full bg-gradient-to-r from-indigo-500 to-pink-500 transition-all duration-300 rounded-full"
               style={{ width: `${Math.max(progress, 10)}%` }}
             />
           </div>
@@ -352,7 +351,7 @@ export default function ToolPage() {
 
         {/* Error */}
         {error && (
-          <div className="mt-6 bg-red-50 border border-red-200 rounded-xl p-4 text-red-700">
+          <div className="mt-6 bg-red-500/10 border border-red-500/20 rounded-2xl p-4 text-red-400">
             <p className="font-medium">Error</p>
             <p className="text-sm mt-1">{error}</p>
           </div>
@@ -360,14 +359,14 @@ export default function ToolPage() {
 
         {/* Download Result */}
         {result && (
-          <div className="mt-6 bg-green-50 border border-green-200 rounded-xl p-6 text-center">
-            <p className="text-green-700 font-medium mb-3">
+          <div className="mt-6 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl p-6 text-center">
+            <p className="text-emerald-400 font-medium mb-3">
               Processing complete!
             </p>
             <a
               href={result.url}
               download={result.filename}
-              className="inline-flex items-center gap-2 bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors font-medium"
+              className="inline-flex items-center gap-2 bg-emerald-500 text-white px-6 py-3 rounded-xl hover:bg-emerald-600 transition-colors font-medium"
             >
               <FiDownload />
               Download {result.filename}
@@ -377,22 +376,22 @@ export default function ToolPage() {
 
         {/* Compare Result */}
         {compareResult && (
-          <div className="mt-6 bg-white border border-gray-200 rounded-xl p-6">
-            <h3 className="text-lg font-bold mb-4">Comparison Result</h3>
+          <div className="mt-6 bg-gray-900/50 border border-white/5 rounded-2xl p-6">
+            <h3 className="text-lg font-bold text-white mb-4">Comparison Result</h3>
             {compareResult.identical ? (
-              <p className="text-green-600 font-medium">
+              <p className="text-emerald-400 font-medium">
                 The two PDFs are identical!
               </p>
             ) : (
               <div>
-                <p className="text-orange-600 font-medium mb-3">
+                <p className="text-orange-400 font-medium mb-3">
                   Differences found on{" "}
                   {compareResult.differences?.length || 0} page(s)
                 </p>
                 <div className="max-h-96 overflow-y-auto space-y-4">
                   {compareResult.differences?.map((diff, i) => (
-                    <div key={i} className="bg-gray-50 rounded-lg p-4">
-                      <p className="font-medium text-sm mb-2">
+                    <div key={i} className="bg-gray-800/50 rounded-xl p-4">
+                      <p className="font-medium text-sm text-white mb-2">
                         Page {diff.page}
                       </p>
                       {diff.differences?.slice(0, 10).map((d, j) => (
@@ -400,13 +399,13 @@ export default function ToolPage() {
                           key={j}
                           className="text-xs grid grid-cols-2 gap-2 mb-1"
                         >
-                          <div className="bg-red-50 p-2 rounded">
-                            <span className="text-red-600">File 1 L{d.line}:</span>{" "}
-                            {d.file1}
+                          <div className="bg-red-500/10 p-2 rounded-lg">
+                            <span className="text-red-400">File 1 L{d.line}:</span>{" "}
+                            <span className="text-gray-300">{d.file1}</span>
                           </div>
-                          <div className="bg-green-50 p-2 rounded">
-                            <span className="text-green-600">File 2 L{d.line}:</span>{" "}
-                            {d.file2}
+                          <div className="bg-emerald-500/10 p-2 rounded-lg">
+                            <span className="text-emerald-400">File 2 L{d.line}:</span>{" "}
+                            <span className="text-gray-300">{d.file2}</span>
                           </div>
                         </div>
                       ))}
